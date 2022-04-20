@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <input type="text" name="message">
+    <input type="file" id="image_id">
+    <button class="send" id="btn">Send Message</button>
+</body>
+<script>
+    let url = ""
+    $(document)
+        .on("change","#image_id",function(e){
+            console.log("changed")
+            image = document.getElementById('image_id')
+            image_data = image.files[0]
+            url = URL.createObjectURL(image_data)
+            console.log(url)
+        })
+    $(document).ready(function(){
+
+      
+        // TODO:Photo listener
+        $('#btn').click(function(e){
+            e.preventDefault();
+            alert(url)
+        
+        })
+      
+    
+
+
+
+
+        $('.send').click(function(){
+            const message = $('[name="message"]').val()
+            if(message == ""){
+
+            }
+            else{
+
+                $.ajax({
+
+                    url : 'python.py',
+                    method : 'post',
+                    data : {
+                        message_py:message,
+                        image_data:url,
+                    },
+                    dataType:'text',
+                    success:function(data){
+                        alert(data)
+                    }
+                })
+            }
+        })
+    })
+</script>
+</html>
